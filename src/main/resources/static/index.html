@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taller de bicicletas · Órdenes de reparación</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="encabezado__contenido">
+      <h1>🚲 Taller de bicicletas</h1>
+      <p>Control de servicios y órdenes de reparación</p>
+    </div>
+  </header>
+
+  <div id="aviso-archivo" class="aviso" hidden>
+    Abra esta página desde <strong>http://localhost:8080</strong> con el backend en ejecución; si se abre como archivo, las peticiones a la API fallan.
+  </div>
+
+  <main class="contenedor">
+    <nav class="pestanas" role="tablist">
+      <button class="pestana pestana--activa" data-tab="ordenes" role="tab">Órdenes de reparación</button>
+      <button class="pestana" data-tab="servicios" role="tab">Servicios del taller</button>
+    </nav>
+
+    <!-- ===================== ÓRDENES ===================== -->
+    <section id="tab-ordenes" class="panel">
+      <div class="resumen">
+        <div class="tarjeta">
+          <span class="tarjeta__titulo">Órdenes pendientes</span>
+          <span class="tarjeta__valor" id="indicador-pendientes">–</span>
+        </div>
+        <div class="tarjeta" id="tarjeta-total" hidden>
+          <span class="tarjeta__titulo" id="total-titulo">Total del cliente</span>
+          <span class="tarjeta__valor" id="total-valor">–</span>
+          <span class="tarjeta__detalle" id="total-detalle"></span>
+        </div>
+      </div>
+
+      <div class="barra">
+        <div class="filtros">
+          <label>Estado
+            <select id="filtro-estado">
+              <option value="">Todos</option>
+              <option value="PENDIENTE">Pendiente</option>
+              <option value="EN_PROCESO">En proceso</option>
+              <option value="TERMINADA">Terminada</option>
+            </select>
+          </label>
+          <label>Cliente
+            <input type="search" id="filtro-cliente" placeholder="Nombre del cliente">
+          </label>
+          <button class="btn btn--secundario" id="btn-buscar-cliente">Buscar cliente</button>
+          <button class="btn btn--texto" id="btn-limpiar">Limpiar filtros</button>
+        </div>
+        <button class="btn btn--primario" id="btn-nueva-orden">+ Nueva orden</button>
+      </div>
+
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Cliente</th><th>Bicicleta</th><th>Fecha</th><th>Servicio</th>
+              <th class="num">Recargo</th><th class="num">Costo estimado</th><th>Estado</th><th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-ordenes"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICIOS ===================== -->
+    <section id="tab-servicios" class="panel" hidden>
+      <div class="barra barra--derecha">
+        <button class="btn btn--primario" id="btn-nuevo-servicio">+ Nuevo servicio</button>
+      </div>
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Nombre</th><th>Descripción</th><th class="num">Costo base</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="tbody-servicios"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FORMULARIO DE ORDEN ===================== -->
+  <dialog id="dlg-orden">
+    <form id="form-orden" novalidate>
+      <h2 id="dlg-orden-titulo">Nueva orden</h2>
+      <div class="error-general" id="orden-error" hidden></div>
+
+      <label>Cliente
+        <input name="cliente" maxlength="100">
+        <small class="error" data-error="cliente"></small>
+      </label>
+      <label>Bicicleta
+        <input name="bicicleta" maxlength="100">
+        <small class="error" data-error="bicicleta"></small>
+      </label>
+      <div class="fila">
+        <label>Fecha
+          <input type="date" name="fecha">
+          <small class="error" data-error="fecha"></small>
+        </label>
+        <label>Recargo autorizado (Q)
+          <input type="number" name="recargo" min="0" step="0.01" value="0">
+          <small class="error" data-error="recargo"></small>
+        </label>
+      </div>
+      <label>Servicio
+        <select name="servicioId"></select>
+        <small class="error" data-error="servicioId"></small>
+      </label>
+      <label>Observaciones
+        <textarea name="observaciones" rows="3" maxlength="255"></textarea>
+        <small class="error" data-error="observaciones"></small>
+      </label>
+      <p class="costo-previo">Costo estimado: <strong id="costo-previo">Q 0.00</strong></p>
+
+      <div class="acciones-form">
+        <button type="button" class="btn btn--texto" data-cerrar>Cancelar</button>
+        <button type="submit" class="btn btn--primario">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ===================== FORMULARIO DE SERVICIO ===================== -->
+  <dialog id="dlg-servicio">
+    <form id="form-servicio" novalidate>
+      <h2 id="dlg-servicio-titulo">Nuevo servicio</h2>
+      <div class="error-general" id="servicio-error" hidden></div>
+
+      <label>Nombre
+        <input name="nombre" maxlength="100">
+        <small class="error" data-error="nombre"></small>
+      </label>
+      <label>Descripción
+        <textarea name="descripcion" rows="3" maxlength="255"></textarea>
+        <small class="error" data-error="descripcion"></small>
+      </label>
+      <label>Costo base (Q)
+        <input type="number" name="costoBase" min="0" step="0.01">
+        <small class="error" data-error="costoBase"></small>
+      </label>
+
+      <div class="acciones-form">
+        <button type="button" class="btn btn--texto" data-cerrar>Cancelar</button>
+        <button type="submit" class="btn btn--primario">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

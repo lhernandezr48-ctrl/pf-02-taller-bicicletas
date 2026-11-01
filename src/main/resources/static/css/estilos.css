@@ -1,0 +1,121 @@
+:root {
+  --azul: #1f4e79;
+  --azul-claro: #e8f0f8;
+  --verde: #2e7d32;
+  --verde-claro: #e6f4e7;
+  --ambar: #b26a00;
+  --ambar-claro: #fff3dc;
+  --rojo: #b3261e;
+  --rojo-claro: #fdeceb;
+  --gris: #5f6b76;
+  --borde: #d5dde5;
+  --fondo: #f4f7fa;
+  --radio: 10px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  background: var(--fondo);
+  color: #1c2630;
+  line-height: 1.45;
+}
+
+.encabezado { background: var(--azul); color: #fff; padding: 22px 16px; }
+.encabezado__contenido { max-width: 1150px; margin: 0 auto; }
+.encabezado h1 { margin: 0; font-size: 1.6rem; }
+.encabezado p { margin: 4px 0 0; opacity: .85; }
+
+.aviso { background: var(--ambar-claro); color: var(--ambar); padding: 10px 16px; text-align: center; }
+
+.contenedor { max-width: 1150px; margin: 0 auto; padding: 20px 16px 60px; }
+
+.pestanas { display: flex; gap: 6px; margin-bottom: 16px; border-bottom: 2px solid var(--borde); }
+.pestana {
+  border: 0; background: none; padding: 10px 18px; font-size: 1rem; cursor: pointer;
+  color: var(--gris); border-bottom: 3px solid transparent; margin-bottom: -2px; font-weight: 600;
+}
+.pestana:hover { color: var(--azul); }
+.pestana--activa { color: var(--azul); border-bottom-color: var(--azul); }
+
+.resumen { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.tarjeta {
+  background: #fff; border: 1px solid var(--borde); border-radius: var(--radio);
+  padding: 14px 20px; min-width: 210px; display: flex; flex-direction: column;
+}
+.tarjeta__titulo { color: var(--gris); font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
+.tarjeta__valor { font-size: 1.9rem; font-weight: 700; color: var(--azul); }
+.tarjeta__detalle { color: var(--gris); font-size: .85rem; }
+
+.barra { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.barra--derecha { justify-content: flex-end; }
+.filtros { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.filtros label { display: flex; flex-direction: column; font-size: .8rem; color: var(--gris); gap: 3px; }
+
+input, select, textarea {
+  font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; background: #fff; color: inherit;
+}
+input:focus, select:focus, textarea:focus, .btn:focus-visible, .pestana:focus-visible {
+  outline: 2px solid var(--azul); outline-offset: 1px;
+}
+
+.btn {
+  font: inherit; font-weight: 600; padding: 8px 14px; border-radius: 8px; border: 1px solid transparent; cursor: pointer;
+}
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn--primario { background: var(--azul); color: #fff; }
+.btn--primario:hover:not(:disabled) { background: #173a5c; }
+.btn--secundario { background: var(--azul-claro); color: var(--azul); border-color: #c5d7ea; }
+.btn--texto { background: none; color: var(--azul); }
+.btn--texto:hover:not(:disabled) { background: var(--azul-claro); }
+.btn--peligro { background: var(--rojo-claro); color: var(--rojo); border-color: #f2c4c0; }
+.btn--chico { padding: 4px 10px; font-size: .82rem; }
+
+.tabla-contenedor { background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 820px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--borde); vertical-align: middle; }
+th { background: #f0f4f8; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--gris); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: #fafcfe; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.vacio { text-align: center; color: var(--gris); padding: 28px; }
+.acciones { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.insignia { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .8rem; font-weight: 700; }
+.insignia--PENDIENTE { background: var(--ambar-claro); color: var(--ambar); }
+.insignia--EN_PROCESO { background: var(--azul-claro); color: var(--azul); }
+.insignia--TERMINADA { background: var(--verde-claro); color: var(--verde); }
+.insignia--ACTIVO { background: var(--verde-claro); color: var(--verde); }
+.insignia--INACTIVO { background: #eceff2; color: var(--gris); }
+
+dialog {
+  border: 0; border-radius: 14px; padding: 0; width: min(520px, 94vw);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+}
+dialog::backdrop { background: rgba(15, 30, 45, .55); }
+dialog form { padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+dialog h2 { margin: 0 0 4px; color: var(--azul); }
+dialog label { display: flex; flex-direction: column; gap: 4px; font-size: .85rem; font-weight: 600; color: var(--gris); }
+dialog input, dialog select, dialog textarea { font-weight: 400; color: #1c2630; }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.error { color: var(--rojo); font-weight: 600; min-height: 1em; }
+.error-general { background: var(--rojo-claro); color: var(--rojo); padding: 10px 12px; border-radius: 8px; font-weight: 600; }
+.campo-invalido { border-color: var(--rojo); }
+.costo-previo { margin: 0; padding: 10px 12px; background: var(--azul-claro); border-radius: 8px; color: var(--azul); }
+.acciones-form { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+
+.toasts { position: fixed; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 50; }
+.toast {
+  padding: 12px 16px; border-radius: 10px; color: #fff; font-weight: 600; max-width: 380px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25); animation: entrar .2s ease-out;
+}
+.toast--ok { background: var(--verde); }
+.toast--error { background: var(--rojo); }
+@keyframes entrar { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 600px) { .fila { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+.nowrap { white-space: nowrap; }
