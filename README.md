@@ -31,6 +31,7 @@ src/main/java/com/taller/bicicletas
 sql/             Scripts de estructura y datos de prueba
 postman/         Colección de Postman con las pruebas
 evidencias/      Documento de seguimiento y evidencias (Word)
+src/main/resources/static/   Frontend (HTML, CSS y JavaScript)
 ```
 
 ## Requisitos para ejecutar el proyecto
@@ -73,7 +74,19 @@ $env:DB_PASSWORD='su_contraseña_de_postgres'
 ```
 
 La API queda disponible en `http://localhost:8080`. Para detenerla se usa `Ctrl + C`.
+## Instrucciones para abrir el frontend
 
+Con el backend en ejecución, abra en el navegador:
+
+http://localhost:8080
+
+Los archivos del frontend (HTML, CSS y JavaScript) están en `src/main/resources/static/`:
+
+- `index.html`
+- `css/estilos.css`
+- `js/app.js`
+
+Desde la interfaz se pueden registrar, consultar, modificar y eliminar órdenes y servicios, cambiar el estado de una orden, filtrar por estado o por cliente, y ver el total a pagar de un cliente y el indicador de órdenes pendientes.
 ## Endpoints
 
 ### Servicios — `/api/servicios`
